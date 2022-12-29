@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { FirebaseService } from './services/firebase.service';
+import { FirebaseCollections } from './types/objects';
+import { UserDocument } from './types/user/user.document';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +10,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'task-manager';
+
+  constructor() {
+  }
 }
