@@ -45,9 +45,9 @@ export class FirebaseService {
             );
         return objectsArray;
     }
-    public getObjectById(object: FirebaseCollections, id: string): Array<FirebaseObjects> {
+    public async getObjectById(object: FirebaseCollections, id: string): Promise<Array<FirebaseObjects>> {
         let objectsArray: Array<FirebaseObjects> = [];
-        this.firestore.collection(object).snapshotChanges()
+        await this.firestore.collection(object).snapshotChanges()
             .pipe(
                 map(
                     (obj: DocumentChangeAction<any>[]): Array<FirebaseObjects> => {
@@ -73,5 +73,9 @@ export class FirebaseService {
                 }
             );
         return objectsArray;
+    }
+
+    public async createObject(objectType: FirebaseCollections, newObject: any) {
+        await this.firestore.collection(objectType).add({ ...newObject });
     }
 }

@@ -1,0 +1,63 @@
+<app-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="value" [backdropEnabled]="true"
+ [displayProgressSpinner]="displayProgressSpinner">
+</app-progress-spinner>
+<div class="flex items-center justify-center h-screen bg-purple-600">
+    <mat-tab-group #tabRow dynamicHeight mat-stretch-tabs="false" headerPosition="below" (selectedTabChange)="tabChange(tabRow.selectedIndex)">
+        <mat-tab label="Login" >
+            <ng-container *ngTemplateOutlet="formContent"></ng-container>
+        </mat-tab>
+        <mat-tab label="Register" class="min-h-full">
+            <ng-container *ngTemplateOutlet="formContent"></ng-container>
+        </mat-tab>
+        
+    </mat-tab-group>
+    
+</div>
+
+<ng-template #formContent>
+    <form class="form-box" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field floatLabel="auto" hideRequiredMarker="false" color="primary">
+            <mat-label>Email</mat-label>
+            <input 
+            matInput 
+            id="email"
+            formControlName="email"
+            >
+        </mat-form-field>
+        <div *ngIf="selectedOption === 'Register'">
+            <mat-form-field floatLabel="auto" hideRequiredMarker="false" color="primary">
+                <mat-label>First Name</mat-label>
+                <input 
+                matInput 
+                id="firstName"
+                formControlName="firstName"
+                >
+                
+            </mat-form-field>
+        </div>
+        <div *ngIf="selectedOption === 'Register'">
+            <mat-form-field floatLabel="auto" hideRequiredMarker="false" color="primary">
+                <mat-label>Last Name</mat-label>
+                <input 
+                matInput 
+                required
+                id="lastName"
+                formControlName="lastName"
+                >
+            </mat-form-field>
+        </div>
+        <mat-form-field floatLabel="auto" hideRequiredMarker="false" >
+            <mat-label>Password</mat-label>
+            <input 
+            type="password" 
+            matInput 
+            required
+            id="password"
+                formControlName="password"
+            >
+        </mat-form-field>
+        <div class="flex flex-row">
+            <button color="primary" mat-flat-button>{{selectedOption}}</button>
+        </div>
+    </form>
+</ng-template>
