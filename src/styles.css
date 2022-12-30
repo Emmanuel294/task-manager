@@ -1,4 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@tailwind base;
+@tailwind components;
+.form-box{
+    @apply flex flex-col p-10 m-10 border rounded-lg border-solid border border-gray-400 bg-gray-500
+}
+.error-class{
+    @apply bg-red-300 bg-opacity-80
+}
+.success-class{
+    @apply bg-green-300 bg-opacity-80
+}
+@tailwind utilities;
