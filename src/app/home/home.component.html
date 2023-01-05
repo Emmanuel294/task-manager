@@ -1,1 +1,22 @@
-<p>home works!</p>
+<mat-sidenav-container class="flex w-full h-screen">
+    <mat-sidenav 
+    #sidenav 
+    mode="side" 
+    [(opened)]="opened"
+    class="w-1/5 p-4"
+    (opened)="sideIcon = 'chevron_left'"(closed)="sideIcon = 'chevron_right'"
+    >
+    Projects
+    <mat-chip-list class="flex mat-chip-list-stacked">
+        <mat-chip  [selectable]="true" *ngFor="let item of items" color="primary" (click)="chip.select()" #chip="matChip">{{item.name}}
+        </mat-chip>
+    </mat-chip-list>
+</mat-sidenav>
+    <mat-sidenav-content>
+        <div class="h-full w-10 bg-system-gray">
+            <button mat-icon-button (click)="opened =! opened">
+                <mat-icon>{{sideIcon}}</mat-icon>
+            </button>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

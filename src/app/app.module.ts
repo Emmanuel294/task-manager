@@ -16,6 +16,7 @@ import { FormsModules } from './modules/forms.module';
 import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.component';
 import { AppOverlayModule } from './modules/overlay/overlay.module';
 import { DialogComponent } from './dialog/dialog.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { DialogComponent } from './dialog/dialog.component';
     HomeComponent,
     LoginComponent,
     ProgressSpinnerComponent,
-    DialogComponent
+    DialogComponent,
+    HeaderComponent
   ],
   imports: [
     AppOverlayModule,

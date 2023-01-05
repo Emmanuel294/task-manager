@@ -1,0 +1,14 @@
+<div class="flex bg-gray-600 justify-between items-center p-2 pt-4">
+    <div class="flex">
+        <a class="text-3xl m-2 bold">{{pageTitle}}</a>
+    </div>
+    <div *ngIf="isAuthenticated">
+        <button mat-icon-button [matMenuTriggerFor]="userMenu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #userMenu>
+            <button mat-menu-item>BackEnd</button>
+            <button mat-menu-item>LogOut</button>
+        </mat-menu>
+    </div>
+</div>
