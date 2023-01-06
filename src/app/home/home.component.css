@@ -1,0 +1,30 @@
+.prj-form{
+    animation: easeInAnimation .3s ease-in forwards;
+}
+
+.prj-form-open{
+    animation: easeOutAnimation .3s ease-out forwards;
+}
+
+@keyframes easeInAnimation {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+  }
+@keyframes easeOutAnimation {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-110%);
+    }
+  }
+mat-sidenav:not(.mat-drawer-opened) {
+    transform: translate3d(0, 0, 0) !important;
+    visibility: visible !important;
+    width: 60px !important;
+    overflow: hidden;
+}

@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { UserDocument } from "../types/user/user.document";
 import { BehaviorSubject, Observable } from 'rxjs';
 import { stringLength } from "@firebase/util";
+import { Router } from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,11 @@ export class AuthenticationService {
 
     public token: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
 
-    public constructor(private readonly afAuth: AngularFireAuth) {
+    private tokenExpirationTimer: any;
+
+    public constructor(
+        private readonly router: Router,
+        private readonly afAuth: AngularFireAuth) {
 
     }
 
@@ -23,10 +28,11 @@ export class AuthenticationService {
     public async login(email: string, password: string): Promise<string> {
         return await this.afAuth.signInWithEmailAndPassword(email, password).then(
             (result: any): any => {
-                result.user.getIdToken(true).then(
-                    (token: string): void => {
-                        localStorage.setItem('token', token);
-                        this.token.next(token);
+                result.user.getIdTokenResult(true).then(
+                    (token: any): void => {
+                        localStorage.setItem('token', token.token);
+                        this.token.next(token.token);
+                        this.autoLogout(new Date(token.expirationTime).getTime() - new Date().getTime());
                     }
                 )
             }
@@ -46,5 +52,24 @@ export class AuthenticationService {
 
         this.token.next(token);
 
+    }
+
+    autoLogout(expirationDuration: number) {
+        this.tokenExpirationTimer = setTimeout(
+            (): any => {
+                this.logOut();
+            },
+            expirationDuration
+        );
+    }
+
+    logOut() {
+        this.token.next(null);
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+        if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer);
+            this.tokenExpirationTimer = null;
+        }
     }
 }

@@ -17,6 +17,9 @@ import { ProgressSpinnerComponent } from './progress-spinner/progress-spinner.co
 import { AppOverlayModule } from './modules/overlay/overlay.module';
 import { DialogComponent } from './dialog/dialog.component';
 import { HeaderComponent } from './header/header.component';
+import { ProjectFormComponent } from './project-form/project-form.component';
+import { ProjectComponent } from './project/project.component';
+import { TaskFormComponent } from './task-form/task-form.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { HeaderComponent } from './header/header.component';
     LoginComponent,
     ProgressSpinnerComponent,
     DialogComponent,
-    HeaderComponent
+    HeaderComponent,
+    ProjectFormComponent,
+    ProjectComponent,
+    TaskFormComponent
   ],
   imports: [
     AppOverlayModule,

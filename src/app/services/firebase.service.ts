@@ -5,6 +5,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs';
 import { FirebaseCollections, FirebaseObjects } from '../types/objects';
+import { Observable } from 'rxjs';
 
 @Injectable(
     { providedIn: 'root' }
@@ -16,9 +17,8 @@ export class FirebaseService {
     ) {
     }
 
-    public async getObjectList(object: FirebaseCollections): Promise<Array<FirebaseObjects>> {
-        let objectsArray: Array<FirebaseObjects> = [];
-        await this.firestore.collection(object).snapshotChanges()
+    public getObjectList(object: FirebaseCollections): Observable<FirebaseObjects[]> {
+        return this.firestore.collection(object).snapshotChanges()
             .pipe(
                 map(
                     (obj: DocumentChangeAction<any>[]): Array<FirebaseObjects> => {
@@ -36,14 +36,7 @@ export class FirebaseService {
                         )
                     }
                 )
-            )
-            .subscribe(
-                (objects: Array<FirebaseObjects>): void => {
-                    console.log(objects);
-                    objectsArray = objects;
-                }
             );
-        return objectsArray;
     }
     public async getObjectById(object: FirebaseCollections, id: string): Promise<Array<FirebaseObjects>> {
         let objectsArray: Array<FirebaseObjects> = [];
@@ -68,7 +61,6 @@ export class FirebaseService {
             )
             .subscribe(
                 (objects: Array<FirebaseObjects>): void => {
-                    console.log(objects);
                     objectsArray = objects;
                 }
             );
@@ -76,6 +68,7 @@ export class FirebaseService {
     }
 
     public async createObject(objectType: FirebaseCollections, newObject: any) {
+        newObject['created'] = new Date().getTime();
         await this.firestore.collection(objectType).add({ ...newObject });
     }
 }

@@ -7,8 +7,8 @@
             <mat-icon>menu</mat-icon>
         </button>
         <mat-menu #userMenu>
-            <button mat-menu-item>BackEnd</button>
-            <button mat-menu-item>LogOut</button>
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item (click)="handleLogout()">LogOut</button>
         </mat-menu>
     </div>
 </div>

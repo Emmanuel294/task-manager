@@ -1,0 +1,21 @@
+<form class="form-box w-full -ml-0" [formGroup]="projectForm" (ngSubmit)="onSubmit()" id="form">
+    <mat-form-field>
+        <mat-label>Project Name</mat-label>
+        <input 
+            matInput 
+            id="projectName"
+            formControlName="name"
+            >
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Description</mat-label>
+        <textarea 
+            matInput 
+            id="projectName"
+            formControlName="description"
+            ></textarea>
+    </mat-form-field>
+    <div class="flex flex-row">
+        <button color="primary" mat-flat-button [disabled]="!projectForm.valid">Save</button>
+    </div>
+</form>

@@ -1,22 +1,37 @@
-<mat-sidenav-container class="flex w-full h-screen">
+<app-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="value" [backdropEnabled]="true"
+ [displayProgressSpinner]="displayProgressSpinner">
+</app-progress-spinner>
+<mat-sidenav-container class="flex w-full h-screen" >
     <mat-sidenav 
     #sidenav 
     mode="side" 
     [(opened)]="opened"
     class="w-1/5 p-4"
-    (opened)="sideIcon = 'chevron_left'"(closed)="sideIcon = 'chevron_right'"
     >
-    Projects
-    <mat-chip-list class="flex mat-chip-list-stacked">
-        <mat-chip  [selectable]="true" *ngFor="let item of items" color="primary" (click)="chip.select()" #chip="matChip">{{item.name}}
+    <div class="absolute right-3 top-0">
+        <button  mat-icon-button (click)="clickSidenav()">
+        <mat-icon>{{sideIcon}}</mat-icon>
+    </button>
+    </div>
+    <div class="mt-7">
+        <mat-icon>description</mat-icon>
+        <span class="absolute" *ngIf="opened">Projects</span>
+    <mat-chip-list class="flex mat-chip-list-stacked mb-5" *ngIf="opened">
+        <mat-chip  
+        [selectable]="true" 
+        *ngFor="let project of projects$" 
+        color="primary" 
+        #chip="matChip"
+        (click)="changeSelectedProject(project)"
+        [selected]="project === selectedProject"
+        >{{project.name}}
         </mat-chip>
     </mat-chip-list>
+    <button mat-raised-button color="primary" (click)="createProject()" *ngIf="opened">{{projectButtonLabel}}</button>
+    <div  id="projectForm" class="prj-form-open" *ngIf="opened">
+        <app-project-form ></app-project-form>
+    </div>
+    </div>
 </mat-sidenav>
-    <mat-sidenav-content>
-        <div class="h-full w-10 bg-system-gray">
-            <button mat-icon-button (click)="opened =! opened">
-                <mat-icon>{{sideIcon}}</mat-icon>
-            </button>
-        </div>
-    </mat-sidenav-content>
+<app-project [project]="selectedProject"></app-project>
 </mat-sidenav-container>
