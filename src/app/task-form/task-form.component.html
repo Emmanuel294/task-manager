@@ -1,13 +1,14 @@
-<form class="form-box" id="form">
+<form class="form-box" id="form" [formGroup]="taskForm" (ngSubmit)="onSubmit(formDirective)" #formDirective="ngForm" >
     <div class="flex space-x-4 flex-row w-full"><mat-form-field class="">
         <mat-label>Task Name</mat-label>
         <input 
             matInput 
             id="projectName"
+            formControlName="name"
             >
     </mat-form-field>
     <div class="">
-        <button color="primary" mat-flat-button>Create</button>
+        <button type="submit" color="primary" mat-flat-button [disabled]="!taskForm.valid">Create</button>
     </div>
 </div>
 </form>

@@ -20,6 +20,8 @@ import { HeaderComponent } from './header/header.component';
 import { ProjectFormComponent } from './project-form/project-form.component';
 import { ProjectComponent } from './project/project.component';
 import { TaskFormComponent } from './task-form/task-form.component';
+import { TaskComponent } from './task/task.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { TaskFormComponent } from './task-form/task-form.component';
     HeaderComponent,
     ProjectFormComponent,
     ProjectComponent,
-    TaskFormComponent
+    TaskFormComponent,
+    TaskComponent,
+    ConfirmationDialogComponent
   ],
   imports: [
     AppOverlayModule,

@@ -1,4 +1,4 @@
-<app-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="value" [backdropEnabled]="true"
+<app-progress-spinner class="example-margin sticky top-0 z-50" [color]="color" [mode]="mode" [value]="value" [backdropEnabled]="true"
  [displayProgressSpinner]="displayProgressSpinner">
 </app-progress-spinner>
 <mat-sidenav-container class="flex w-full h-screen" >
@@ -24,7 +24,10 @@
         #chip="matChip"
         (click)="changeSelectedProject(project)"
         [selected]="project === selectedProject"
-        >{{project.name}}
+        >
+                {{project.name}}
+                <button mat-icon-button color="warn" matTooltip="Close Project" (click)="closeProject(project)"><mat-icon >cancel</mat-icon></button>
+            <!-- <button mat-icon-button color="warn" ><mat-icon>close</mat-icon></button> -->
         </mat-chip>
     </mat-chip-list>
     <button mat-raised-button color="primary" (click)="createProject()" *ngIf="opened">{{projectButtonLabel}}</button>

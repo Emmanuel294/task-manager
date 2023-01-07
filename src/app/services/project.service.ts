@@ -1,7 +1,7 @@
 /* ••[1]••••••••••••••••••••••••• project.service.ts •••••••••••••••••••••••••••••• */
 
 import { Injectable } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, map } from 'rxjs';
 import { FirebaseCollections, FirebaseObjects } from '../types/objects';
 import { ProjectCreateDocument, ProjectDocument } from '../types/project/project.document';
 import { FirebaseService } from './firebase.service';
@@ -23,13 +23,28 @@ export class ProjectService {
         this.firebaseService.createObject(FirebaseCollections.projects, project);
     }
 
-    public async getAllProjects(): Promise<void> {
-        await this.firebaseService.getObjectList(FirebaseCollections.projects)
+    public getAllProjects(): void {
+        this.firebaseService.getObjectList(FirebaseCollections.projects)
+            .pipe(
+                map(
+                    (projects: FirebaseObjects[]): ProjectDocument[] => {
+                        return projects.filter(
+                            (project: FirebaseObjects): boolean => {
+                                return !(project as ProjectDocument).closed;
+                            }
+                        ) as unknown as ProjectDocument[];
+                    }
+                )
+            )
             .subscribe(
-                (projects: FirebaseObjects[]): void => {
-                    this.projects = projects as ProjectDocument[];
+                (projects: ProjectDocument[]): void => {
+                    this.projects = projects;
                     this.projects$.next(this.projects.slice());
                 }
             );
+    }
+
+    public closeProject(projectId: string) {
+        this.firebaseService.updateObject(FirebaseCollections.projects, { closed: true }, projectId);
     }
 }

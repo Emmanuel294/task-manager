@@ -1,0 +1,9 @@
+<mat-card class="flex space-x-4 flex-row flex-wrap justify-between w-full h-full">
+    <mat-card-title >
+        {{task.name}}
+    </mat-card-title>
+    <mat-card-actions align="end" class="-mt-12">
+        <mat-checkbox class="mt-2.5" (change)="handleChangeStatus($event.checked)" [checked]="task.closed"></mat-checkbox>
+        <button mat-icon-button color="warn" (click)="handleDelete()"><mat-icon>delete</mat-icon></button>
+    </mat-card-actions>
+</mat-card>

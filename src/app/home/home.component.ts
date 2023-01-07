@@ -6,6 +6,8 @@ import { ProjectDocument } from '../types/project/project.document';
 import { ThemePalette } from '@angular/material/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { MatChip } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public selectedProject: ProjectDocument | undefined = undefined;
 
   constructor(
+    private readonly dialog: MatDialog,
     private readonly projectService: ProjectService
   ) { }
 
@@ -101,6 +104,27 @@ export class HomeComponent implements OnInit, AfterViewInit {
     if (selectedProject !== this.selectedProject) {
       this.selectedProject = selectedProject;
     }
+  }
+
+  public closeProject(project: ProjectDocument) {
+    this.dialog.open(
+      ConfirmationDialogComponent, {
+      data: {
+        acceptLabel: 'Delete',
+        cancelLabel: 'Cancel',
+        dialogTitle: 'Delete Project',
+        message: `Are you sure you want to delete the project '${project.name}'?`,
+      },
+      backdropClass: 'error-class',
+    }
+    ).afterClosed()
+      .subscribe(
+        (result: boolean): any => {
+          if (result) {
+            this.projectService.closeProject(project.id);
+          }
+        }
+      )
   }
 
 }

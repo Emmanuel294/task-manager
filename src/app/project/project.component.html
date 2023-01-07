@@ -1,21 +1,27 @@
-<div class="flex flex-col items-center mat-typography">
-    <div class="flex flex-col place-items-center">
-        <h1>{{project?.name}}</h1>
-        <p>{{project?.description}}</p>
+<div class="flex flex-col items-center mat-typography static mb-24">
+    <div class="sticky top-0 z-50 w-full flex flex-col items-center bg-system-gray-1">
+        <div class="flex flex-col place-items-center">
+            <h1>{{project?.name}}</h1>
+            <h2>{{project?.description}}</h2>
+        </div>
+        <div class="w-5/12">
+            <mat-accordion multi="true" >
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            Create Task 
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <app-task-form [projectId]="project?.id"></app-task-form>   
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+        <div class="w-11/12 h-10 mt-5 static m-auto">
+            <h3 *ngIf="projectProgress < 0" class="h-full">No existing tasks, please create tasks.</h3>
+            <mat-progress-bar min="0" max="100"  mode="determinate" [value]="projectProgress" *ngIf="projectProgress >=0" class="h-full" color="primary"></mat-progress-bar>
+        </div>
     </div>
-    <div>
-        <mat-accordion multi="true">
-            <mat-expansion-panel>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Create Task 
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <app-task-form [projectId]="project?.id"></app-task-form>
-            </mat-expansion-panel>
-        </mat-accordion>
-    </div>
-    <div>
-        Tasks List
+    <div class="mt-10 w-8/12 h-12 -mb-9" *ngFor="let task of tasks">
+        <app-task [task]="task"></app-task>
     </div>
 </div>
